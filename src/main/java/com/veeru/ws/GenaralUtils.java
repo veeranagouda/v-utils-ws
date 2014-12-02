@@ -8,10 +8,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Properties;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -62,15 +59,15 @@ public class GenaralUtils {
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     public Response getUsPhoneNumbers(@DefaultValue("5") @QueryParam("count") Integer count){
 
+        List<String> phones=new ArrayList<String>();
 
 
-        HashMap<Integer,String> phoneMap=new HashMap<>();
-        for(int i=0;i<count;i++){
-            phoneMap.put(i, Utilities.generateRandomPhoneNumber()) ;
+        for(int i=1;i<=count;i++){
+        phones.add(Utilities.generateRandomPhoneNumber());
         }
 
         Gson gson=new Gson();
-        String message=gson.toJson(phoneMap,HashMap.class);
+        String message=gson.toJson(phones,List.class);
         return Response.ok(message, MediaType.APPLICATION_JSON).build();
     }
 

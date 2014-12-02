@@ -5,6 +5,7 @@ import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 import org.apache.log4j.Logger;
 
+import javax.ws.rs.core.Response;
 import java.util.Random;
 
 /**
@@ -16,7 +17,7 @@ import java.util.Random;
  */
 public class Utilities {
     private static final Logger logger = Logger.getLogger(Utilities.class.getName());
-
+    private static  String _corsHeaders;
     public static String generateRandomPhoneNumber(){
         String phone=null;
         boolean validPhone=false;
@@ -45,5 +46,22 @@ public class Utilities {
             logger.info("Phone NumberParseException was thrown: " + e.toString());
             return false;
         }
+    }
+
+
+
+    public static Response makeCORS(Response.ResponseBuilder req, String returnMethod) {
+        Response.ResponseBuilder rb = req.header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+
+        if (!"".equals(returnMethod)) {
+            rb.header("Access-Control-Allow-Headers", returnMethod);
+        }
+
+        return rb.build();
+    }
+
+    public static Response makeCORS(Response.ResponseBuilder req) {
+        return makeCORS(req, _corsHeaders);
     }
 }

@@ -18,8 +18,8 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 @Path("platform/utils")
-public class GenaralUtils {
-    private static final Logger logger = Logger.getLogger(GenaralUtils.class.getName());
+public class GeneralUtilities {
+    private static final Logger logger = Logger.getLogger(GeneralUtilities.class.getName());
 
     @GET
     @Path("/date")

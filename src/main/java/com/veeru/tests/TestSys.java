@@ -1,13 +1,10 @@
-package com.veeru.util.tests;
+package com.veeru.tests;
 
 import com.google.gson.Gson;
 import org.apache.log4j.Logger;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Properties;
-import java.util.TimeZone;
 
 /**
  * Created with IntelliJ IDEA.

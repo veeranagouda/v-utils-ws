@@ -1,5 +1,5 @@
 
-package com.veeru.util.ws;
+package com.veeru.ws;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

@@ -75,9 +75,9 @@ public class GeneralUtilities {
         return Response.ok(message, MediaType.APPLICATION_JSON).build();
     }
 
-   /*
+
     @POST
-    @Path("file/upload")
+    @Path("/upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response uploadFile(@FormDataParam("file") java.io.InputStream fileInputStream,@FormDataParam("file") com.sun.jersey.core.header.FormDataContentDisposition contentDispositionHeader) {
         String filePath = SERVER_UPLOAD_LOCATION_FOLDER + contentDispositionHeader.getFileName();
@@ -119,6 +119,4 @@ public class GeneralUtilities {
         }
         return isSuccess;
     }
-
-*/
 }

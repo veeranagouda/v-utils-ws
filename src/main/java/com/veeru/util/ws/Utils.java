@@ -9,6 +9,7 @@ import javax.ws.rs.core.Response;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Properties;
 import java.util.TimeZone;
 
 /**
@@ -41,4 +42,15 @@ public class Utils {
         String message=gson.toJson(timeMap,HashMap.class);
         return Response.ok(message, MediaType.APPLICATION_JSON).build();
     }
+
+    @GET
+    @Path("/sys")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
+    public Response getSysDetails(){
+        Properties properties=System.getProperties();
+        Gson gson=new Gson();
+        String message=gson.toJson(properties,HashMap.class);
+        return Response.ok(message, MediaType.APPLICATION_JSON).build();
+    }
+
 }

@@ -1,12 +1,15 @@
 package com.veeru.ws;
 
 import com.google.gson.Gson;
+import com.sun.jersey.core.spi.factory.ResponseBuilderImpl;
+import com.sun.jersey.multipart.FormDataParam;
 import com.veeru.util.Utilities;
 import org.apache.log4j.Logger;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -20,6 +23,7 @@ import java.util.*;
 @Path("platform/utils")
 public class GeneralUtilities {
     private static final Logger logger = Logger.getLogger(GeneralUtilities.class.getName());
+    private static final String SERVER_UPLOAD_LOCATION_FOLDER ="/tmp/files";
 
     @GET
     @Path("/date")
@@ -69,6 +73,51 @@ public class GeneralUtilities {
         Gson gson=new Gson();
         String message=gson.toJson(phones,List.class);
         return Response.ok(message, MediaType.APPLICATION_JSON).build();
+    }
+
+
+    @POST
+    @Path("file/upload")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response uploadFile(@FormDataParam("file") java.io.InputStream fileInputStream,@FormDataParam("file") com.sun.jersey.core.header.FormDataContentDisposition contentDispositionHeader) {
+        String filePath = SERVER_UPLOAD_LOCATION_FOLDER + contentDispositionHeader.getFileName();
+        ResponseBuilderImpl builder = new ResponseBuilderImpl();
+        logger.info("Uploading file : " + filePath);
+        Boolean isSuccess=saveFile(fileInputStream, filePath);
+        if(isSuccess) {
+            String output = "File saved to server location : " + filePath;
+            logger.info(output);
+            builder.status(200);
+            builder.entity(output);
+            return Utilities.makeCORS(builder);
+        }  else {
+            logger.error("Error in uploading file : " + filePath);
+            builder.status(500);
+            builder.entity("<b>Error in saving file.</b>");
+            return Utilities.makeCORS(builder);
+        }
+    }
+
+
+    private Boolean saveFile(InputStream uploadedInputStream,String serverLocation) {
+        Boolean isSuccess=false;
+        try {
+            OutputStream outputStream = new FileOutputStream(new File(serverLocation));
+            int read = 0;
+            byte[] bytes = new byte[1024];
+            outputStream = new FileOutputStream(new File(serverLocation));
+            while ((read = uploadedInputStream.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, read);
+            }
+            outputStream.flush();
+            outputStream.close();
+            isSuccess=true;
+        } catch (IOException e) {
+            logger.error("Unable to save file : " + e.getMessage());
+            isSuccess=false;
+            e.printStackTrace();
+        }
+        return isSuccess;
     }
 
 }

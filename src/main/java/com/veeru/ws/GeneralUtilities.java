@@ -75,7 +75,7 @@ public class GeneralUtilities {
         return Response.ok(message, MediaType.APPLICATION_JSON).build();
     }
 
-
+   /*
     @POST
     @Path("file/upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -120,4 +120,5 @@ public class GeneralUtilities {
         return isSuccess;
     }
 
+*/
 }

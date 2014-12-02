@@ -7,7 +7,7 @@
     <version>0.1</version>
     <name>v-utils-ws Jersey Webapp</name>
     <build>
-        <finalName>v-utils-ws</finalName>
+        <finalName>utils-ws</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

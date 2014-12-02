@@ -30,14 +30,16 @@ public class FileUtilities {
     public Response uploadFile(@FormDataParam("file") java.io.InputStream fileInputStream,@FormDataParam("file") com.sun.jersey.core.header.FormDataContentDisposition contentDispositionHeader) {
         String filePath = SERVER_UPLOAD_LOCATION_FOLDER + contentDispositionHeader.getFileName();
         ResponseBuilderImpl builder = new ResponseBuilderImpl();
-
+        logger.info("Uploading file : " + filePath);
         Boolean isSuccess=saveFile(fileInputStream, filePath);
         if(isSuccess) {
         String output = "File saved to server location : " + filePath;
+            logger.info(output);
             builder.status(200);
             builder.entity(output);
             return Utilities.makeCORS(builder);
         }  else {
+            logger.error("Error in uploading file : " + filePath);
             builder.status(500);
             builder.entity("<b>Error in saving file.</b>");
             return Utilities.makeCORS(builder);
